@@ -1,13 +1,14 @@
+# data.py
 import pandas as pd
 import joblib
 
-# Load model
+# Load model churn
 try:
     model = joblib.load('logistic_regression_model_pemograman1.pkl')
 except FileNotFoundError:
-    raise FileNotFoundError("Model file tidak ditemukan.")
+    raise FileNotFoundError("❌ File model tidak ditemukan. Pastikan file .pkl tersedia.")
 
-# Fungsi prediksi churn
+# Fungsi untuk memprediksi churn pelanggan
 def predict_churn(data: dict):
     input_df = pd.DataFrame([{
         "age": data['age'],
@@ -17,7 +18,6 @@ def predict_churn(data: dict):
         "Monetary": data['Monetary'],
     }])
 
-    input_df = input_df[['age', 'marital_status', 'Recency', 'Frequency', 'Monetary']]
     prediction = model.predict(input_df)[0]
     probability = model.predict_proba(input_df)[0][1]
 
